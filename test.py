@@ -42,11 +42,12 @@ def getHooplaLinks(listName):
     time.sleep(1)
 
     class bookDetails:
-        def __init__(self, title, link, author, image):
+        def __init__(self, title, link, author, image, listTitle):
             self.title = title
             self.link = link
             self.author = author
             self.image = image
+            self.listTitle = listTitle
 
     hooplaInformationArray = []
     # findListTitles = driver.find_elements_by_class_name('result-title')
@@ -81,28 +82,33 @@ def getHooplaLinks(listName):
             except:
                 titleNumber = '#'
             singleBookInsert = bookDetails(
-                bookTitle, 'https://www.hoopladigital.com/title/' + str(titleNumber), bookAuthor, imageLink)
+                bookTitle, 'https://www.hoopladigital.com/title/' + str(titleNumber), bookAuthor, imageLink, listName)
             hooplaInformationArray.append(singleBookInsert)
+            # print(hooplaInformationArray)
     except:
         print('no such list found')
-
-    client = pymongo.MongoClient(uri)
-    db = client.liveTest
-    bookDetails = db.funEbooks
+    # for obj in hooplaInformationArray:
+    #     print(obj.title, obj.link, obj.author,
+    #           obj.image, obj.listName, sep=' ')
     try:
-        for obj in hooplaInformationArray:
-            book = {
-                'list': listName,
-                'title': obj.title,
-                'link': obj.link,
-                'author': obj.author,
-                'image': obj.image
-            }
-            result = bookDetails.insert_one(book)
-            print(result)
+        client = pymongo.MongoClient(uri)
+        db = client.liveTest
+        bookDetails = db.funEbooks
+        try:
+            for obj in hooplaInformationArray:
+                book = {
+                    'title': obj.title,
+                    'link': obj.link,
+                    'author': obj.author,
+                    'image': obj.image,
+                    'list': obj.listTitle
+                }
+                result = bookDetails.insert_one(book)
+                print(result)
+        except Exception as e:
+            print('database error', e, sep='')
     except:
-        print('database error')
+        print('connection error')
 
 
 getHooplaLinks('Fun Ebooks available on Hoopla (16)')
-#     print( obj.title, obj.link, sep =' ' )

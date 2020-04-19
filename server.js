@@ -10,12 +10,13 @@ const client = new MongoClient(uri);
 app.use(cors());
 app.listen(port, function () {
 	console.log(`server running on ${port}`);
+	client.connect({ useUnifiedTopology: true });
 });
 
 app.get('/', function (req, res) {
 	async function main() {
 		try {
-			await client.connect();
+			// await client.connect();
 			await findCollections(client);
 		} catch (e) {
 			console.log(e);
