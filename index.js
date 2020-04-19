@@ -9,32 +9,24 @@ function listChecker(list, book) {
 		const listName = document.getElementsByClassName('listNames');
 		const listItem = document.createElement('li');
 		const newButton = document.createElement('button');
+		buttonClassName = list.split(' ').join('');
+		newButton.classList.add(buttonClassName);
 		newButton.innerText = list;
 		listName[0].appendChild(listItem).appendChild(newButton);
 		listname.push({ list: list, books: [book] });
 		// NEED TO ADD EVENT LISTENER TO EACH BUTTON TO SHOW LIST ITEMS
-		// newbutton.addEventListener('click', function (event) {
-		// 	modalWork.showModal(book)
+		newButton.addEventListener('click', function (event) {
+			newButton.classList.add('is.visable');
+		});
+
+		// createModals(list);
 	}
-	console.log(listname);
 	const buttonInformationGetter = document.getElementsByTagName('button');
 	listTitle = buttonInformationGetter.innerText;
-	// listname.push(buttonInformationGetter);
-	// console.log(listname);
 }
+
 function addListName(book) {
-	// const listName = document.getElementsByClassName('listNames');
-	// const listItem = document.createElement('li');
-	// const newButton = document.createElement('button');
-	// newButton.innerText = book.title;
-	// listName[0].appendChild(listItem).appendChild(newButton);
-
 	listChecker(book.list, book);
-	// if (document.)
-
-	// NEED TO ADD EVENT LISTENER TO EACH BUTTON TO SHOW LIST ITEMS
-	// newbutton.addEventListener('click', function (event) {
-	// 	modalWork.showModal(book)
 }
 
 async function fetchAsync() {
@@ -52,6 +44,19 @@ fetchAsync()
 		books.push(data);
 		data.forEach((book) => {
 			addListName(book);
+		});
+		listname.map((data) => {
+			const container = document.getElementsByClassName('container');
+			const modal = document.createElement('div');
+			const bookList = document.createElement('ul');
+			const exitButton = document.createElement('button');
+			modal.appendChild(bookList);
+			container[0].appendChild(modal);
+			data.books.map((book) => {
+				const bookListItem = document.createElement('li');
+				bookListItem.innerText = book.title;
+				bookList.appendChild(bookListItem);
+			});
 		});
 	})
 	.catch((reason) => console.log(reason.message));

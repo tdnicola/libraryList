@@ -110,4 +110,4 @@ def getHooplaLinks(listName):
         print('connection error')
 
 
-getHooplaLinks('Hoopla movies of the 2000s (22)')
+getHooplaLinks('Natural disasters (18)')
