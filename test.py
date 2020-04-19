@@ -20,6 +20,7 @@ uri = info["uri"]
 
 
 def getHooplaLinks(listName):
+    listTitle = listName
     chrome_options = Options()
     chrome_options.add_argument("--headless")
     driver = webdriver.Chrome(
@@ -42,12 +43,12 @@ def getHooplaLinks(listName):
     time.sleep(1)
 
     class bookDetails:
-        def __init__(self, title, link, author, image, listTitle):
+        def __init__(self, title, link, author, image, listItem):
             self.title = title
             self.link = link
             self.author = author
             self.image = image
-            self.listTitle = listTitle
+            self.listItem = listItem
 
     hooplaInformationArray = []
     # findListTitles = driver.find_elements_by_class_name('result-title')
@@ -82,14 +83,12 @@ def getHooplaLinks(listName):
             except:
                 titleNumber = '#'
             singleBookInsert = bookDetails(
-                bookTitle, 'https://www.hoopladigital.com/title/' + str(titleNumber), bookAuthor, imageLink, listName)
+                bookTitle, 'https://www.hoopladigital.com/title/' + str(titleNumber), bookAuthor, imageLink, listTitle)
             hooplaInformationArray.append(singleBookInsert)
             # print(hooplaInformationArray)
     except:
         print('no such list found')
-    # for obj in hooplaInformationArray:
-    #     print(obj.title, obj.link, obj.author,
-    #           obj.image, obj.listName, sep=' ')
+
     try:
         client = pymongo.MongoClient(uri)
         db = client.liveTest
@@ -101,7 +100,7 @@ def getHooplaLinks(listName):
                     'link': obj.link,
                     'author': obj.author,
                     'image': obj.image,
-                    'list': obj.listTitle
+                    'list': obj.listItem
                 }
                 result = bookDetails.insert_one(book)
                 print(result)
@@ -111,4 +110,4 @@ def getHooplaLinks(listName):
         print('connection error')
 
 
-getHooplaLinks('Fun Ebooks available on Hoopla (16)')
+getHooplaLinks('Hoopla movies of the 2000s (22)')

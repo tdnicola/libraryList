@@ -1,8 +1,9 @@
 listname = [];
 
-function listChecker(list) {
-	if (listname.includes(list) == true) {
-		console.log('rejected: ' + list);
+function listChecker(list, book) {
+	if (listname.some((data) => data.list === list)) {
+		let obj = listname.find((obj) => obj.list == list);
+		obj.books.push(book);
 		return;
 	} else {
 		const listName = document.getElementsByClassName('listNames');
@@ -10,16 +11,16 @@ function listChecker(list) {
 		const newButton = document.createElement('button');
 		newButton.innerText = list;
 		listName[0].appendChild(listItem).appendChild(newButton);
-		listname.push({ list: list, books: [] });
-		// console.log(listname);
+		listname.push({ list: list, books: [book] });
 		// NEED TO ADD EVENT LISTENER TO EACH BUTTON TO SHOW LIST ITEMS
 		// newbutton.addEventListener('click', function (event) {
 		// 	modalWork.showModal(book)
 	}
+	console.log(listname);
 	const buttonInformationGetter = document.getElementsByTagName('button');
 	listTitle = buttonInformationGetter.innerText;
 	// listname.push(buttonInformationGetter);
-	console.log(listname);
+	// console.log(listname);
 }
 function addListName(book) {
 	// const listName = document.getElementsByClassName('listNames');
@@ -28,8 +29,7 @@ function addListName(book) {
 	// newButton.innerText = book.title;
 	// listName[0].appendChild(listItem).appendChild(newButton);
 
-	listChecker(book.title);
-	console.log(listname);
+	listChecker(book.list, book);
 	// if (document.)
 
 	// NEED TO ADD EVENT LISTENER TO EACH BUTTON TO SHOW LIST ITEMS
@@ -55,10 +55,5 @@ fetchAsync()
 		});
 	})
 	.catch((reason) => console.log(reason.message));
-// books = fetchData();
-// var books = fetchAsync().then((data) => {
-// 	return data;
-// });
-// console.log(books);
 
 fetchAsync();
