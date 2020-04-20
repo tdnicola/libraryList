@@ -1,0 +1,55 @@
+.hidden {
+	display: none;
+}
+body {
+	font-family: Arial;
+	padding: 20px;
+	background: #f1f1f1;
+}
+
+h1 {
+	text-align: center;
+}
+
+.bookList {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: white;
+	padding: 1rem 1.5rem;
+	width: 70%;
+	border-radius: 0.5rem;
+	background-color: white;
+	height: 70%;
+	color: white;
+	font: 1.3rem Inconsolata, monospace;
+	text-shadow: 0 0 5px #c8c8c8;
+	overflow: scroll;
+	border: 1px solid black;
+}
+.bookItem {
+	background-color: #9e9c9c;
+	border: 1px solid;
+	/* width: 100%; */
+	justify-content: center;
+	/* padding: 15px;
+	width: 500px;  */
+}
+
+.title {
+	font-size: 1.3em;
+}
+.author {
+	float: right;
+}
+.photo {
+	/* float: right; */
+}
+.exitButton {
+	float: right;
+}
+.listNames {
+	/* display: inline; */
+	width: 50%;
+}
