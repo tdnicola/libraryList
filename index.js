@@ -62,6 +62,10 @@ fetchAsync()
 			const divContentBody = document.createElement('div');
 			divContentBody.classList.add('modal-content');
 			const divModalHeader = document.createElement('div');
+			const topCloseButton = document.createElement('button');
+			topCloseButton.setAttribute('type', 'button');
+			topCloseButton.setAttribute('data-dismiss', 'modal');
+			topCloseButton.innerText = 'X';
 			divModalHeader.classList.add('modal-header');
 			divModalHeader.innerText = data.list;
 			const divModalBody = document.createElement('div');
@@ -78,31 +82,25 @@ fetchAsync()
 			closeButton.setAttribute('type', 'button');
 			closeButton.setAttribute('data-dismiss', 'modal');
 			closeButton.innerText = 'Close';
-
+			divModalHeader.appendChild(topCloseButton);
 			divModalFooter.appendChild(closeButton);
 			divContentBody.appendChild(divModalFooter);
-			const container = document.getElementsByClassName('container');
-			document.body.append(divFade);
+			const container = document.getElementsByClassName('container-fluid');
+			container[0].append(divFade);
 
 			data.books.map((book) => {
-				// divModalBody insert into
 				const bookItem = document.createElement('div');
-				const authorDiv = document.createElement('div');
 				const photoDiv = document.createElement('div');
 				const titleDiv = document.createElement('div');
 				const hooplaLink = document.createElement('div');
 				bookItem.classList.add('bookItem');
-				authorDiv.classList.add('author');
 				photoDiv.classList.add('photo');
 				titleDiv.classList.add('title');
 				hooplaLink.classList.add('hooplaLink');
-				titleDiv.innerText = book.title;
-				authorDiv.innerText = 'Author: ' + book.author;
+				titleDiv.innerHTML = `${book.title} <span class='author'>${book.author} </span>`;
 				photoDiv.innerHTML = `<img src="${book.image}">`;
-				authorDiv.innerText = 'Author: ' + book.author;
-				hooplaLink.innerHTML = `<a href="${book.link}">Hoopla</a>`;
+				hooplaLink.innerHTML = `<a href="${book.link}" target="_blank">Check me out on Hoopla!</a>`;
 				bookItem.appendChild(titleDiv);
-				bookItem.appendChild(authorDiv);
 				bookItem.appendChild(photoDiv);
 				bookItem.appendChild(hooplaLink);
 				divModalBody.appendChild(bookItem);

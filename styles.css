@@ -36,6 +36,7 @@ h1 {
 	background-color: rgb(227, 242, 252);
 	border: 1px solid;
 	justify-content: center;
+	padding: 10px;
 }
 
 .title {
@@ -51,9 +52,9 @@ h1 {
 .listNames {
 	width: 75%;
 }
-.modal-dialog {
+/* .modal-dialog {
 	width: 700px;
-}
+} */
 button {
 	margin: 2px;
 }
