@@ -34,7 +34,7 @@ function addListName(book) {
 
 async function fetchAsync() {
 	// await response of fetch call
-	let response = await fetch('http://localhost:5000/');
+	let response = await fetch('https://library-listings.herokuapp.com/');
 	// only proceed once promise is resolved
 	let data = await response.json();
 	// only proceed once second promise is resolved
