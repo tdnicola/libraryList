@@ -4,7 +4,11 @@
 body {
 	font-family: Arial;
 	padding: 20px;
-	background: #f1f1f1;
+	background: url(./background.jpg) no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
 }
 
 h1 {
@@ -29,12 +33,9 @@ h1 {
 	border: 1px solid black;
 }
 .bookItem {
-	background-color: #9e9c9c;
+	background-color: rgb(227, 242, 252);
 	border: 1px solid;
-	/* width: 100%; */
 	justify-content: center;
-	/* padding: 15px;
-	width: 500px;  */
 }
 
 .title {
@@ -43,13 +44,28 @@ h1 {
 .author {
 	float: right;
 }
-.photo {
-	/* float: right; */
-}
+
 .exitButton {
 	float: right;
 }
 .listNames {
-	/* display: inline; */
-	width: 50%;
+	width: 75%;
+}
+.modal-dialog {
+	width: 700px;
+}
+button {
+	margin: 2px;
+}
+.btn {
+	font-weight: bold;
+	font-size: 1.2em;
+}
+li {
+	list-style-type: none;
+}
+.modal-header {
+	font-weight: bold;
+
+	font-size: 1.3em;
 }

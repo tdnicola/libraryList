@@ -6,19 +6,23 @@ function listChecker(list, book) {
 		obj.books.push(book);
 		return;
 	} else {
+		divClassName = list.split(' ').join('');
+		divClassNameReplaced = divClassName.replace(/\W/g, '');
+
+		buttonList = document.createElement('button');
+		buttonList.setAttribute('type', 'button');
+		buttonList.classList.add('btn');
+		// buttonList.classList.add('btn-primary');
+		buttonList.setAttribute('data-toggle', 'modal');
+
+		buttonList.setAttribute('data-target', '#' + divClassNameReplaced);
+
 		const listName = document.getElementsByClassName('listNames');
 		const listItem = document.createElement('li');
-		const newButton = document.createElement('button');
-		// newButton.classList.add(buttonClassName);
-		newButton.innerText = list;
-		listName[0].appendChild(listItem).appendChild(newButton);
+		buttonList.innerText = list;
+		listName[0].appendChild(listItem).appendChild(buttonList);
+
 		listname.push({ list: list, books: [book] });
-		// NEED TO ADD EVENT LISTENER TO EACH BUTTON TO SHOW LIST ITEMS
-		newButton.addEventListener('click', function (event) {
-			divClassName = list.split(' ').join('');
-			divSelector = document.getElementsByClassName(divClassName);
-			divSelector[0].classList.toggle('hidden');
-		});
 	}
 	const buttonInformationGetter = document.getElementsByTagName('button');
 	listTitle = buttonInformationGetter.innerText;
@@ -45,35 +49,43 @@ fetchAsync()
 			addListName(book);
 		});
 		listname.map((data) => {
+			const divClassName = data.list.split(' ').join('');
+			divClassNameReplaced = divClassName.replace(/\W/g, '');
+			const divFade = document.createElement('div');
+			divFade.classList.add('modal');
+			divFade.classList.add('fade');
+			divFade.setAttribute('id', divClassNameReplaced);
+
+			const divDialog = document.createElement('div');
+			divDialog.classList.add('modal-dialog');
+			divDialog.classList.add('modal-lg');
+			const divContentBody = document.createElement('div');
+			divContentBody.classList.add('modal-content');
+			const divModalHeader = document.createElement('div');
+			divModalHeader.classList.add('modal-header');
+			divModalHeader.innerText = data.list;
+			const divModalBody = document.createElement('div');
+			divModalBody.classList.add('modal-body');
+
+			divDialog.appendChild(divContentBody);
+			divContentBody.appendChild(divModalHeader);
+			divContentBody.appendChild(divModalBody);
+			divFade.appendChild(divDialog);
+
+			divModalFooter = document.createElement('div');
+			divModalFooter.classList.add('modal-footer');
+			closeButton = document.createElement('button');
+			closeButton.setAttribute('type', 'button');
+			closeButton.setAttribute('data-dismiss', 'modal');
+			closeButton.innerText = 'Close';
+
+			divModalFooter.appendChild(closeButton);
+			divContentBody.appendChild(divModalFooter);
 			const container = document.getElementsByClassName('container');
-			const modal = document.createElement('div');
-			const modalBackground = document.createElement('div');
-			modalBackground.classList.add('modalBackground');
-			divClassName = data.list.split(' ').join('');
-			modal.classList.add(divClassName);
-			modal.classList.add('hidden');
-			const bookList = document.createElement('div');
-			bookList.classList.add('bookList');
-			const exitButton = document.createElement('button');
-			exitButton.classList.add('exitButton');
-			exitButton.innerText = 'X';
-			exitButton.addEventListener('click', function (event) {
-				divSelector = document.getElementsByClassName(divClassName);
-				divSelector[0].classList.toggle('hidden');
-			});
-			modalBackground.appendChild(bookList);
-			modal.appendChild(modalBackground);
-			modal.appendChild(exitButton);
-			// function windowClick(event) {
-			// 	if (event.target === !modal) {
-			// 		// divSelector = document.getElementsByClassName(divClassName);
-			// 		// divSelector[0].classList.toggle('hidden');
-			// 		console.log('hello');
-			// 	}
-			// }
-			// window.addEventListener('click', windowClick());
-			container[0].appendChild(modal);
+			document.body.append(divFade);
+
 			data.books.map((book) => {
+				// divModalBody insert into
 				const bookItem = document.createElement('div');
 				const authorDiv = document.createElement('div');
 				const photoDiv = document.createElement('div');
@@ -84,18 +96,16 @@ fetchAsync()
 				photoDiv.classList.add('photo');
 				titleDiv.classList.add('title');
 				hooplaLink.classList.add('hooplaLink');
-
 				titleDiv.innerText = book.title;
 				authorDiv.innerText = 'Author: ' + book.author;
 				photoDiv.innerHTML = `<img src="${book.image}">`;
 				authorDiv.innerText = 'Author: ' + book.author;
 				hooplaLink.innerHTML = `<a href="${book.link}">Hoopla</a>`;
-
 				bookItem.appendChild(titleDiv);
 				bookItem.appendChild(authorDiv);
 				bookItem.appendChild(photoDiv);
 				bookItem.appendChild(hooplaLink);
-				bookList.appendChild(bookItem);
+				divModalBody.appendChild(bookItem);
 			});
 		});
 	})
