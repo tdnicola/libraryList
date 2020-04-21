@@ -110,4 +110,4 @@ def getHooplaLinks(listName):
         print('connection error')
 
 
-getHooplaLinks('Become an Origami master - instantly available on Hoopla (20)')
+getHooplaLinks('Palmistry, numerology, and other fortune telling methods (12)')

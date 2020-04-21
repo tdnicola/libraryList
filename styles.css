@@ -70,3 +70,10 @@ li {
 
 	font-size: 1.3em;
 }
+
+ul {
+	transform: rotate(180deg);
+}
+ul > li {
+	transform: rotate(-180deg);
+}
