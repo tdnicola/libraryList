@@ -12,7 +12,6 @@ function listChecker(list, book) {
 		buttonList = document.createElement('button');
 		buttonList.setAttribute('type', 'button');
 		buttonList.classList.add('btn');
-		// buttonList.classList.add('btn-primary');
 		buttonList.setAttribute('data-toggle', 'modal');
 
 		buttonList.setAttribute('data-target', '#' + divClassNameReplaced);
@@ -26,10 +25,9 @@ function listChecker(list, book) {
 	}
 	const buttonInformationGetter = document.getElementsByTagName('button');
 	listTitle = buttonInformationGetter.innerText;
-}
-
-function addListName(book) {
-	listChecker(book.list, book);
+	if ($('#loadingInfo').text() == 'Loading... One Moment...') {
+		$('#loadingInfo').hide();
+	}
 }
 
 async function fetchAsync() {
@@ -46,7 +44,7 @@ fetchAsync()
 		var books = [];
 		books.push(data);
 		data.forEach((book) => {
-			addListName(book);
+			listChecker(book.list, book);
 		});
 		listname.map((data) => {
 			const divClassName = data.list.split(' ').join('');
