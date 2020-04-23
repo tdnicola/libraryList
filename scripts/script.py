@@ -43,12 +43,13 @@ def getHooplaLinks(listName):
     time.sleep(1)
 
     class bookDetails:
-        def __init__(self, title, link, author, image, listItem):
+        def __init__(self, title, link, author, image, listItem, description):
             self.title = title
             self.link = link
             self.author = author
             self.image = image
             self.listItem = listItem
+            self.description = description
 
     hooplaInformationArray = []
     # findListTitles = driver.find_elements_by_class_name('result-title')
@@ -60,7 +61,6 @@ def getHooplaLinks(listName):
         hooplaButtons = driver.find_elements_by_link_text('Check Out Hoopla')
         findListTitles = driver.find_elements_by_class_name('result-title')
         imageLinkList = driver.find_elements_by_class_name('listResultImage')
-        # authorList = driver.find_elements_by_class_name('result-value', 'col-tn-9', 'col-xs-9', 'notranslate')
         for item in range(len(resultList)):
             try:
                 bookAuthorHtml = resultList[item].find_elements_by_class_name(
@@ -82,8 +82,13 @@ def getHooplaLinks(listName):
                 titleNumber = ''.join(i for i in hooplaLink if i.isdigit())
             except:
                 titleNumber = '#'
+            try:
+                bookDescription = driver.find_elements_by_xpath(
+                    "//*[@class='result-value hidden-xs col-sm-12']")[item].get_attribute('innerHTML')
+            except:
+                bookDescription = 'Not Found'
             singleBookInsert = bookDetails(
-                bookTitle, 'https://www.hoopladigital.com/title/' + str(titleNumber), bookAuthor, imageLink, listTitle)
+                bookTitle, 'https://www.hoopladigital.com/title/' + str(titleNumber), bookAuthor, imageLink, listTitle, bookDescription)
             hooplaInformationArray.append(singleBookInsert)
             # print(hooplaInformationArray)
     except:
@@ -100,7 +105,8 @@ def getHooplaLinks(listName):
                     'link': obj.link,
                     'author': obj.author,
                     'image': obj.image,
-                    'list': obj.listItem
+                    'list': obj.listItem,
+                    'description': obj.description
                 }
                 result = bookDetails.insert_one(book)
                 print(result)
@@ -110,4 +116,4 @@ def getHooplaLinks(listName):
         print('connection error')
 
 
-getHooplaLinks("It's so Kawaii!!! (12)")
+getHooplaLinks("Animals of Hoopla - funny ebooks (12)")

@@ -108,6 +108,11 @@ fetchAsync()
 										`<a href="${book.link}" target="_blank">Check me out on Hoopla!</a>`
 									)
 							)
+							.append(
+								$(document.createElement('div'))
+									.addClass('bookDescription')
+									.text(`${book.description}`)
+							)
 					);
 			});
 		});
