@@ -110,4 +110,4 @@ def getHooplaLinks(listName):
         print('connection error')
 
 
-getHooplaLinks('Palmistry, numerology, and other fortune telling methods (12)')
+getHooplaLinks("It's so Kawaii!!! (12)")
