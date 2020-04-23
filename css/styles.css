@@ -12,7 +12,9 @@ body {
 }
 
 h1 {
-	text-align: center;
+	width: 45%;
+	margin-left: 10%;
+	font-weight: 700;
 }
 
 .bookList {
