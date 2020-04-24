@@ -1,8 +1,8 @@
 from selenium import webdriver
 # from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.ui import Select
 
-import os
 import time
 import re
 import pymongo
@@ -52,10 +52,13 @@ def getHooplaLinks(listName):
             self.description = description
 
     hooplaInformationArray = []
+
     # findListTitles = driver.find_elements_by_class_name('result-title')
     try:
         listName = driver.find_element_by_link_text(listName)
         listName.click()
+        select = Select(driver.find_element_by_id('pageSize'))
+        select.select_by_value('100')
         # hooplaLinks = []
         resultList = driver.find_elements_by_class_name('result')
         hooplaButtons = driver.find_elements_by_link_text('Check Out Hoopla')
@@ -92,7 +95,7 @@ def getHooplaLinks(listName):
             hooplaInformationArray.append(singleBookInsert)
             # print(hooplaInformationArray)
     except:
-        print('no such list found')
+        raise Exception("Error: no such list found")
 
     try:
         client = pymongo.MongoClient(uri)
@@ -115,5 +118,7 @@ def getHooplaLinks(listName):
     except:
         print('connection error')
 
+    print(len(hooplaInformationArray))
 
-getHooplaLinks("Animals of Hoopla - funny ebooks (12)")
+
+getHooplaLinks("The Walking Dead - Hoopla List (32)")
